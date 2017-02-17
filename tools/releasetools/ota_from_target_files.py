@@ -596,7 +596,8 @@ def WriteFullOTAPackage(input_zip, output_zip):
       metadata=metadata,
       info_dict=OPTIONS.info_dict)
 
-  has_recovery_patch = HasRecoveryPatch(input_zip)
+  #  has_recovery_patch = HasRecoveryPatch(input_zip)
+  has_recovery_patch = True
   block_based = OPTIONS.block_based and has_recovery_patch
 
   metadata["ota-type"] = "BLOCK" if block_based else "FILE"
@@ -743,8 +744,8 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
       common.ZipWriteStr(output_zip, "recovery/" + fn, data)
       system_items.Get("system/" + fn)
 
-    common.MakeRecoveryPatch(OPTIONS.input_tmp, output_sink,
-                             recovery_img, boot_img)
+#    common.MakeRecoveryPatch(OPTIONS.input_tmp, output_sink,
+#                             recovery_img, boot_img)
 
     script.Print("{*} Setting permissions...")
     system_items.GetMetadata(input_zip)
@@ -1648,12 +1649,12 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
     source_fp = CalculateFingerprint(oem_props, oem_dict,
                                      OPTIONS.source_info_dict)
 
-    if oem_props is None:
-      script.AssertSomeFingerprint(source_fp, target_fp)
-    else:
-      script.AssertSomeThumbprint(
-          GetBuildProp("ro.build.thumbprint", OPTIONS.target_info_dict),
-          GetBuildProp("ro.build.thumbprint", OPTIONS.source_info_dict))
+#    if oem_props is None:
+#      script.AssertSomeFingerprint(source_fp, target_fp)
+#    else:
+#      script.AssertSomeThumbprint(
+#          GetBuildProp("ro.build.thumbprint", OPTIONS.target_info_dict),
+#          GetBuildProp("ro.build.thumbprint", OPTIONS.source_info_dict))
 
     metadata["pre-build"] = source_fp
     metadata["post-build"] = target_fp
@@ -1670,12 +1671,13 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
   updating_boot = (not OPTIONS.two_step and
                    (source_boot.data != target_boot.data))
 
-  source_recovery = common.GetBootableImage(
-      "/tmp/recovery.img", "recovery.img", OPTIONS.source_tmp, "RECOVERY",
-      OPTIONS.source_info_dict)
-  target_recovery = common.GetBootableImage(
-      "/tmp/recovery.img", "recovery.img", OPTIONS.target_tmp, "RECOVERY")
-  updating_recovery = (source_recovery.data != target_recovery.data)
+  #source_recovery = common.GetBootableImage(
+  #    "/tmp/recovery.img", "recovery.img", OPTIONS.source_tmp, "RECOVERY",
+  #    OPTIONS.source_info_dict)
+  #target_recovery = common.GetBootableImage(
+  #    "/tmp/recovery.img", "recovery.img", OPTIONS.target_tmp, "RECOVERY")
+  #updating_recovery = (source_recovery.data != target_recovery.data)
+  updating_recovery = False
 
   # Here's how we divide up the progress bar:
   #  0.1 for verifying the start state (PatchCheck calls)
@@ -1755,19 +1757,8 @@ else if get_stage("%(bcb_dev)s") != "3/3" then
       include_full_boot = True
       common.ZipWriteStr(output_zip, "boot.img", target_boot.data)
     else:
-      include_full_boot = False
-
-      print "boot      target: %d  source: %d  diff: %d" % (
-        target_boot.size, source_boot.size, len(d))
-
-      common.ZipWriteStr(output_zip, "patch/boot.img.p", d)
-
-      script.PatchCheck("%s:%s:%d:%s:%d:%s" %
-                        (boot_type, boot_device,
-                         source_boot.size, source_boot.sha1,
-                         target_boot.size, target_boot.sha1))
-    so_far += source_boot.size
-    size.append(target_boot.size)
+      include_full_boot = True
+      common.ZipWriteStr(output_zip, "boot.img", target_boot.data)
 
   if size:
     script.CacheFreeSpaceCheck(max(size))
