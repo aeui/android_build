@@ -684,8 +684,29 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   # Place a copy of file_contexts.bin into the OTA package which will be used
   # by the recovery program.
+  builddate = GetBuildProp("ro.build.date", OPTIONS.info_dict);
+  releasetype = GetBuildProp("ro.sm.releasetype", OPTIONS.info_dict);
+
+  device = GetBuildProp("ro.sm.device", OPTIONS.info_dict);
+  brand = GetBuildProp("ro.product.brand", OPTIONS.info_dict);
+  if not OPTIONS.override_prop:
+    product = "%s"%(device);
+  else:
+    product = "%s (%s)"%(brand,device);
+
+  script.Print("******************************************");
+  script.Print("* SudaMod ");
+  script.Print("*");
+  script.Print("* Release: %s"%(releasetype));
+  script.Print("* Build date: %s"%(builddate));
+  script.Print("* Device: %s"%(product));
+  script.Print("******************************************");
+
   if "selinux_fc" in OPTIONS.info_dict:
     WritePolicyConfig(OPTIONS.info_dict["selinux_fc"], output_zip)
+
+  if block_based:
+     script.Print("{*} Installing...")
 
   recovery_mount_options = OPTIONS.info_dict.get("recovery_mount_options")
 
@@ -702,13 +723,16 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     system_diff = common.BlockDifference("system", system_tgt, src=None)
     system_diff.WriteScript(script, output_zip)
   else:
+    script.Print("{*} Formatting /system")
     script.FormatPartition("/system")
     script.Mount("/system", recovery_mount_options)
     if not has_recovery_patch:
       script.UnpackPackageDir("recovery", "/system")
+    script.Print("{*} Extracting /system")
     script.UnpackPackageDir("system", "/system")
 
     symlinks = CopyPartitionFiles(system_items, input_zip, output_zip)
+    script.Print("{*} Symlinking...")
     script.MakeSymlinks(symlinks)
 
   boot_img = common.GetBootableImage(
@@ -722,6 +746,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     common.MakeRecoveryPatch(OPTIONS.input_tmp, output_sink,
                              recovery_img, boot_img)
 
+    script.Print("{*} Setting permissions...")
     system_items.GetMetadata(input_zip)
     system_items.Get("system").SetPermissions(script)
 
@@ -751,13 +776,15 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   device_specific.FullOTA_PostValidate()
 
   if OPTIONS.backuptool:
+    script.Print("{*} Restoring backup")
     script.ShowProgress(0.02, 10)
     if block_based:
       script.Mount("/system")
     script.RunBackup("restore")
     if block_based:
       script.Unmount("/system")
-
+    
+  script.Print("{*} Flashing boot.img")
   script.ShowProgress(0.05, 5)
   script.WriteRawImage("/boot", "boot.img")
 
@@ -794,7 +821,7 @@ endif;
   common.ZipWriteStr(output_zip, "system/build.prop",
                      ""+input_zip.read("SYSTEM/build.prop"))
 
-  common.ZipWriteStr(output_zip, "META-INF/org/lineageos/releasekey",
+  common.ZipWriteStr(output_zip, "META-INF/org/sudamod/releasekey",
                      ""+input_zip.read("META/releasekey.txt"))
 
 def WritePolicyConfig(file_name, output_zip):
