@@ -113,8 +113,8 @@ function doMerge() {
           cd $i
           doName
           git pull https://github.com/$PULLNAME cm-14.1 && echo "" || exit 1
-          git commit -a -m"Merge branch 'cm-14.1' into sm-3.0new"
-          git push https://github.com/$PUSHNAME HEAD:sm-3.0new && echo "" || exit 1
+          git commit -a -m"Merge branch 'cm-14.1' into sm-3.1"
+          git push https://github.com/$PUSHNAME HEAD:sm-3.1 && echo "" || exit 1
           cd $ANDROID_BUILD_TOP
      elif [ "$Yes" = e ]; then
             exit 1
