@@ -24,7 +24,7 @@ PROJECTPATH=($ANDROID_BUILD_TOP/android
  $ANDROID_BUILD_TOP/device/qcom/sepolicy
  $ANDROID_BUILD_TOP/packages/apps/Browser
  $ANDROID_BUILD_TOP/packages/apps/Calendar
-# $ANDROID_BUILD_TOP/packages/apps/CellBroadcastReceiver
+ $ANDROID_BUILD_TOP/packages/apps/CellBroadcastReceiver
  $ANDROID_BUILD_TOP/packages/apps/Contacts
  $ANDROID_BUILD_TOP/packages/apps/ContactsCommon
  $ANDROID_BUILD_TOP/packages/apps/CMFileManager
@@ -57,7 +57,7 @@ PROJECTLIST=(.git # ->android.git
  _device_qcom_sepolicy.git
  _packages_apps_Browser.git
  _packages_apps_Calendar.git
-# _packages_apps_CellBroadcastReceiver.git
+ _packages_apps_CellBroadcastReceiver.git
  _packages_apps_Contacts.git
  _packages_apps_ContactsCommon.git
  _packages_apps_CMFileManager.git
