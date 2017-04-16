@@ -24,7 +24,7 @@ PROJECTPATH=($ANDROID_BUILD_TOP/android
  $ANDROID_BUILD_TOP/device/qcom/sepolicy
  $ANDROID_BUILD_TOP/packages/apps/Browser
  $ANDROID_BUILD_TOP/packages/apps/Calendar
- $ANDROID_BUILD_TOP/packages/apps/CellBroadcastReceiver
+# $ANDROID_BUILD_TOP/packages/apps/CellBroadcastReceiver
  $ANDROID_BUILD_TOP/packages/apps/Contacts
  $ANDROID_BUILD_TOP/packages/apps/ContactsCommon
  $ANDROID_BUILD_TOP/packages/apps/CMFileManager
@@ -37,7 +37,7 @@ PROJECTPATH=($ANDROID_BUILD_TOP/android
  $ANDROID_BUILD_TOP/packages/apps/Messaging
 # $ANDROID_BUILD_TOP/packages/apps/InCallUI
  $ANDROID_BUILD_TOP/packages/apps/PackageInstaller
-# $ANDROID_BUILD_TOP/packages/apps/PhoneCommon
+ $ANDROID_BUILD_TOP/packages/apps/PhoneCommon
  $ANDROID_BUILD_TOP/packages/apps/Settings
  $ANDROID_BUILD_TOP/packages/apps/Stk
  $ANDROID_BUILD_TOP/packages/apps/Trebuchet
@@ -57,7 +57,7 @@ PROJECTLIST=(.git # ->android.git
  _device_qcom_sepolicy.git
  _packages_apps_Browser.git
  _packages_apps_Calendar.git
- _packages_apps_CellBroadcastReceiver.git
+# _packages_apps_CellBroadcastReceiver.git
  _packages_apps_Contacts.git
  _packages_apps_ContactsCommon.git
  _packages_apps_CMFileManager.git
@@ -70,7 +70,7 @@ PROJECTLIST=(.git # ->android.git
  _packages_apps_Messaging.git
 # _packages_apps_InCallUI.git
  _packages_apps_PackageInstaller.git
-# _packages_apps_PhoneCommon.git
+ _packages_apps_PhoneCommon.git
  _packages_apps_Settings.git
  _packages_apps_Stk.git
  _packages_apps_Trebuchet.git
