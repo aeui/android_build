@@ -37,7 +37,7 @@ PROJECTPATH=($ANDROID_BUILD_TOP/android
  $ANDROID_BUILD_TOP/packages/apps/Messaging
 # $ANDROID_BUILD_TOP/packages/apps/InCallUI
  $ANDROID_BUILD_TOP/packages/apps/PackageInstaller
- $ANDROID_BUILD_TOP/packages/apps/PhoneCommon
+# $ANDROID_BUILD_TOP/packages/apps/PhoneCommon
  $ANDROID_BUILD_TOP/packages/apps/Settings
  $ANDROID_BUILD_TOP/packages/apps/Stk
  $ANDROID_BUILD_TOP/packages/apps/Trebuchet
@@ -70,7 +70,7 @@ PROJECTLIST=(.git # ->android.git
  _packages_apps_Messaging.git
 # _packages_apps_InCallUI.git
  _packages_apps_PackageInstaller.git
- _packages_apps_PhoneCommon.git
+# _packages_apps_PhoneCommon.git
  _packages_apps_Settings.git
  _packages_apps_Stk.git
  _packages_apps_Trebuchet.git
