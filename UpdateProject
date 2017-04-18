@@ -25,7 +25,7 @@ PROJECTPATH=($ANDROID_BUILD_TOP/android
  $ANDROID_BUILD_TOP/packages/apps/Browser
  $ANDROID_BUILD_TOP/packages/apps/Calendar
  $ANDROID_BUILD_TOP/packages/apps/CellBroadcastReceiver
- $ANDROID_BUILD_TOP/packages/apps/Contacts
+# $ANDROID_BUILD_TOP/packages/apps/Contacts
  $ANDROID_BUILD_TOP/packages/apps/ContactsCommon
  $ANDROID_BUILD_TOP/packages/apps/CMFileManager
  $ANDROID_BUILD_TOP/packages/apps/CMParts
