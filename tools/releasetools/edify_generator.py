@@ -99,16 +99,16 @@ class EdifyGenerator(object):
                  name=name, value=value)
     self.script.append(cmd)
 
-  def AssertSomeFingerprint(self, *fp):
-    """Assert that the current recovery build fingerprint is one of *fp."""
-    if not fp:
-      raise ValueError("must specify some fingerprints")
-    cmd = (' ||\n    '.join([('getprop("ro.build.fingerprint") == "%s"') % i
-                             for i in fp]) +
-           ' ||\n    abort("E%d: Package expects build fingerprint of %s; '
-           'this device has " + getprop("ro.build.fingerprint") + ".");') % (
-               common.ErrorCode.FINGERPRINT_MISMATCH, " or ".join(fp))
-    self.script.append(cmd)
+#  def AssertSomeFingerprint(self, *fp):
+#    """Assert that the current recovery build fingerprint is one of *fp."""
+#    if not fp:
+#      raise ValueError("must specify some fingerprints")
+#    cmd = (' ||\n    '.join([('getprop("ro.build.fingerprint") == "%s"') % i
+#                             for i in fp]) +
+#           ' ||\n    abort("E%d: Package expects build fingerprint of %s; '
+#           'this device has " + getprop("ro.build.fingerprint") + ".");') % (
+#               common.ErrorCode.FINGERPRINT_MISMATCH, " or ".join(fp))
+#    self.script.append(cmd)
 
   def AssertSomeThumbprint(self, *fp):
     """Assert that the current recovery build thumbprint is one of *fp."""
@@ -166,7 +166,7 @@ class EdifyGenerator(object):
     self.script.append(('run_program("/tmp/install/bin/backuptool.sh", "%s");' % command))
 
   def ValidateSignatures(self, command):
-    self.script.append('package_extract_file("META-INF/org/lineageos/releasekey", "/tmp/releasekey");')
+    self.script.append('package_extract_file("META-INF/org/sudamod/releasekey", "/tmp/releasekey");')
     # Exit code 124 == abort. run_program returns raw, so left-shift 8bit
     self.script.append('run_program("/tmp/install/bin/otasigcheck.sh") != "31744" || abort("Can\'t install this package on top of incompatible data. Please try another package or run a factory reset");')
 
